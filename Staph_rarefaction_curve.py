@@ -1,4 +1,36 @@
 #!/usr/bin/env python3
+# PROGRAM: Given a list of species, Sequence types clonal complexes or any categories,
+#this script will calculate shanon index, simpson index and Hill Numbers (q=1,2).
+#It will use random samples [10,20,30,40,50,60,70,80,90,100] with and without replacement
+#from the dataset for 100 times for each sample.
+
+# Copyright (C) 2023 Ahmed M. Moustafa
+
+#########################################################################################
+# LICENSE
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#########################################################################################
+
+# DATE CREATED: March 17, 2023
+
+# AUTHOR: Ahmed M Moustafa
+
+# CONTACT1: moustafnam@email.chop.edu
+
+# AFFILIATION: GI Division, Children’s Hospital of Philadelphia and University of Pennsylvania, Philadelphia,
+# Pennsylvania, 19104, USA
+# CITATION1: Ahmed M Moustafa (https://github.com/ahmedmagds/rarefaction-curves)
 import os
 import sys
 import random
@@ -38,9 +70,6 @@ op_file2 = open('diversity_metrics_with_replacement.csv','w')
 op_file2.write('Period,Sample_size,Shanon Index Mean,Stdev,N,Simpson Index Mean,Stdev,N,Hill numbers (q=1) Mean,Stdev,N,Hill numbers (q=2) Mean,Stdev,N\n')
 for (j, b) in zip(ids, data):
     for i in [10,20,30,40,50,60,70,80,90,100]:
-        #try:
-        #strains_random_list1 = list(random.sample(j, k=i) for x in range(100)) #without replacement
-        #print(strains_random_list1)
         strains_choice_list1 = list(random.choices(b, k=i) for x in range(100)) #with replacement
         div_sh = []
         div_si = []
@@ -64,12 +93,9 @@ for (j, b) in zip(ids, data):
             #print(div_si)
             #print(div_h1)
             #print(div_h2)
-        #print(len(div_sh))
         op_file2.write('{},{},{}\n'.format(j,i,','.join(op_lst2)))
         #print(len(strains_random_list1))
         #print(len(strains_choice_list1))
-        #except:
-        #    continue
 
 #print(strains_random_list1[0])
 #print(strains_random_list1[1])
@@ -83,8 +109,6 @@ for (j, b) in zip(ids, data):
     for i in [10,20,30,40,50,60,70,80,90,100]:
         try:
             strains_random_list1 = list(random.sample(b, k=i) for x in range(100)) #without replacement
-            #print(strains_random_list1)
-            #strains_choice_list1 = list(random.choices(b, k=i) for x in range(100)) #with replacement
             div_sh = []
             div_si = []
             div_h1 = []
@@ -107,7 +131,6 @@ for (j, b) in zip(ids, data):
                 #print(div_si)
                 #print(div_h1)
                 #print(div_h2)
-            #print(len(div_sh))
             op_file2.write('{},{},{}\n'.format(j,i,','.join(op_lst2)))
         except:
             op_lst2 = ['NA']*12
